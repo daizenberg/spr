@@ -5,23 +5,29 @@ class Search extends React.Component {
   constructor() {
     super();
     this.state = {
-      value: ''
+      query: '',
+      scope: 'all'
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleChange(e) {
-    this.setState({ value: e.target.value });
+    this.setState({ query: e.target.value });
   }
   handleSubmit(e) {
-    console.log(e);
-    alert(e);
+    e.preventDefault();
+    if(this.props.onSubmit) {
+      this.props.onSubmit({
+        query: 'stub',
+        scope: 'all'
+      });
+    }
   }
   render() {
     return <form onSubmit={this.handleSubmit}>
             <FormControl
               type = "text"
-              //width = {5}
-              value = {this.state.value}
+              value = {this.state.query}
               placeholder = "Find"
               onChange = {this.handleChange}
             />
@@ -34,5 +40,9 @@ class Search extends React.Component {
       </form>;
   }
 }
+
+Search.propTypes = {
+    onSubmit: React.PropTypes.func
+};
 
 export default Search;
